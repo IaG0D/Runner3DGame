@@ -14,6 +14,22 @@ public class GameController : MonoBehaviour
     public static float highScore = 0f;
     public static bool gameOver = false; //Controla o estado do game
     // Start is called before the first frame update
+
+    public static void LoadData() { //Carrega os dados salvos
+        GameController.highScore = PlayerPrefs.GetFloat("HighScore",0f);
+        GameController.highscoreName = PlayerPrefs.GetString("HighScoreName", "Player");
+
+    }
+    public static void SaveData() { //Salva os dados salvos
+        if(GameController.score > GameController.highScore) {
+            GameController.highScore = GameController.score;
+            GameController.highscoreName = GameController.playerName;
+            PlayerPrefs.SetFloat("HighScore", GameController.highScore);
+            PlayerPrefs.SetString("HighScoreName", GameController.highscoreName);
+            PlayerPrefs.Save();
+        }
+        
+    }
     void Start()
     {
         StartGame();
@@ -23,6 +39,7 @@ public class GameController : MonoBehaviour
         
     }
     private void StartGame() {
+        GameController.LoadData();
         GameController.speed = 10f;
         GameController.TimeToSpawn = 3f;
         GameController.score = 0f;
