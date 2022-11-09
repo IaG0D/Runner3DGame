@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class GameController : MonoBehaviour
     void Start()
     {
         StartGame();
+   
+    }
+    void Update() {
         
     }
-    
     private void StartGame() {
         GameController.speed = 10f;
         GameController.TimeToSpawn = 3f;
@@ -32,6 +35,9 @@ public class GameController : MonoBehaviour
         }
     }
     private void ScoreBoard() {
-        GameController.score += 0.05f * GameController.speed;
+        if(gameOver == false) {
+            GameController.score += 0.05f * GameController.speed;
+        }
+        
     }
 }

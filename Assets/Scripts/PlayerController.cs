@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -25,12 +26,12 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         float space = Input.GetAxis("Jump");
         if (space!=0 && isonGround == true && !GameController.gameOver) {
-            playerJump.Play();
             isonGround = false;
+            playerJump.Play();
             particulePlayer.Stop();
             playerAnim.SetTrigger("Jump_trig");
             playerRG.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            
+
         }
     }
     private void OnCollisionEnter(Collision collision) {
@@ -43,8 +44,22 @@ public class PlayerController : MonoBehaviour {
             GameController.gameOver = true;
             particulePlayer.Stop();
             particuleExplosion.Play();
+            Invoke("GoGameOver", 5f);
 
         }
+    }
+    private void OnTriggerEnter(Collider other) {
+        GameController.gameOver = true;
+        playerDeath.Play();
+        playerAnim.SetBool("Death_b", true);
+        playerAnim.SetInteger("DeathType_int", 2);
+        GameController.gameOver = true;
+        particulePlayer.Stop();
+        particuleExplosion.Play();
+        
+    }
+    void GoGameOver() {
+        SceneManager.LoadScene("GameOver");
     }
 
 }
