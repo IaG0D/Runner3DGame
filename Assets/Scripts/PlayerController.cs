@@ -49,14 +49,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
     private void OnTriggerEnter(Collider other) {
-        GameController.gameOver = true;
         playerDeath.Play();
         playerAnim.SetBool("Death_b", true);
         playerAnim.SetInteger("DeathType_int", 2);
         GameController.gameOver = true;
         particulePlayer.Stop();
         particuleExplosion.Play();
-        
+        Invoke("GoGameOver", 5f);
+
     }
     void GoGameOver() {
         SceneManager.LoadScene("GameOver");

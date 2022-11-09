@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour
     public static float speed = 10f; //Controla a velocidade do jogo
     public static float TimeToSpawn = 3f; //Velocidade de spawn
     public static float score = 0f; //Pontuação
+    public static string playerName = "Runner";
+    public static string highscoreName = "Runner HighScore";
+    public static float highScore = 0f;
     public static bool gameOver = false; //Controla o estado do game
     // Start is called before the first frame update
     void Start()

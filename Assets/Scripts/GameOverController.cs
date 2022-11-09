@@ -12,11 +12,11 @@ public class GameOverController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
-        score.text = "Player: Iago , Score: " + ((int)GameController.score).ToString();
-        scoreB.text = "Player: Iago , Score: " + ((int)GameController.score).ToString();
+        score.text = "Player: "+GameController.playerName+" , Score: " + ((int)GameController.score).ToString();
+        scoreB.text = "Player: " +GameController.playerName+ " , Score: " + ((int)GameController.score).ToString();
 
-        highScore.text = "Player: Iago , HighScore: " + ((int)GameController.score).ToString();
-        highScoreB.text = "Player: Iago , HighScore: " + ((int)GameController.score).ToString();
+        highScore.text = "Player: " +GameController.highscoreName+ " , HighScore: " + ((int)GameController.highScore).ToString();
+        highScoreB.text = "Player: " +GameController.highscoreName+ " , HighScore: " + ((int)GameController.highScore).ToString();
         Invoke("GoMenu", 5f);
     }
 
