@@ -22,11 +22,16 @@ public class GameController : MonoBehaviour
         GameController.score = 0f;
         GameController.gameOver = false;
         InvokeRepeating("ChangeDificulty", 1f, 5f);
+        InvokeRepeating("ScoreBoard", 0.2f, 0.1f);
     }
     private void ChangeDificulty() {
         GameController.speed += 1;
         if (GameController.TimeToSpawn >= 1.5f) {
             GameController.TimeToSpawn -= 0.2f;
+            
         }
+    }
+    private void ScoreBoard() {
+        GameController.score += 0.05f * GameController.speed;
     }
 }

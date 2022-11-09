@@ -5,14 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     private Rigidbody playerRG;
-    public bool isonGround = true; //Se está tocando o chão ou não
+    private Animator playerAnim; //Controla a animação
 
+    public bool isonGround = true; //Se está tocando o chão ou não
     public float jumpForce = 10f; //Força do pulo
     public float gravityModifier = 1f; //Força da gravidade
     
     // Start is called before the first frame update
     void Start() {
         playerRG = GetComponent<Rigidbody>();
+        playerAnim = GetComponent<Animator>();
         Physics.gravity *= gravityModifier;
     }
 
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         float space = Input.GetAxis("Jump");
         if (space!=0 && isonGround == true && !GameController.gameOver) {
+            playerAnim.SetTrigger("Jump_trig");
             playerRG.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isonGround = false;
         }
@@ -27,6 +30,9 @@ public class PlayerController : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
         isonGround = true;
         if (collision.gameObject.name.StartsWith("Obstacle")) {
+            playerAnim.SetBool("Death_b", true);
+            playerAnim.SetInteger("DeathType_int", 2);
+
             GameController.gameOver = true;
         }
     }
