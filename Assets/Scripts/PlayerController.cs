@@ -6,7 +6,10 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody playerRG;
     private Animator playerAnim; //Controla a animação
-
+    public AudioSource playerJump;
+    public AudioSource playerDeath;
+    public ParticleSystem particulePlayer;
+    public ParticleSystem particuleExplosion;
     public bool isonGround = true; //Se está tocando o chão ou não
     public float jumpForce = 10f; //Força do pulo
     public float gravityModifier = 1f; //Força da gravidade
@@ -22,18 +25,25 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         float space = Input.GetAxis("Jump");
         if (space!=0 && isonGround == true && !GameController.gameOver) {
+            playerJump.Play();
+            isonGround = false;
+            particulePlayer.Stop();
             playerAnim.SetTrigger("Jump_trig");
             playerRG.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isonGround = false;
+            
         }
     }
     private void OnCollisionEnter(Collision collision) {
         isonGround = true;
+        particulePlayer.Play();
         if (collision.gameObject.name.StartsWith("Obstacle")) {
+            playerDeath.Play();
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 2);
-
             GameController.gameOver = true;
+            particulePlayer.Stop();
+            particuleExplosion.Play();
+
         }
     }
 
